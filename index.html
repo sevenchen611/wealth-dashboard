@@ -56,6 +56,40 @@
     .sheets-btn:active { background:#1e1e2e; border-color:#7EB8A4; }
     .loading { text-align:center; font-family:monospace; font-size:13px; color:#555; padding:60px 0; }
     .refresh-btn { position:fixed; bottom:24px; right:20px; background:#C8A96E; color:#0d0d1a; border:none; border-radius:50%; width:44px; height:44px; font-size:20px; cursor:pointer; box-shadow:0 4px 12px rgba(200,169,110,0.4); z-index:99; }
+
+    /* ── 記帳按鈕 ── */
+    .add-btn { position:fixed; bottom:24px; left:20px; background:#C8A96E; color:#0d0d1a; border:none; border-radius:50%; width:44px; height:44px; font-size:22px; cursor:pointer; box-shadow:0 4px 12px rgba(200,169,110,0.4); z-index:99; display:flex; align-items:center; justify-content:center; }
+
+    /* ── Modal overlay ── */
+    .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:200; align-items:flex-end; }
+    .modal-overlay.open { display:flex; }
+    .modal { background:#13131f; border:1px solid #2a2a3e; border-radius:20px 20px 0 0; padding:24px 20px 40px; width:100%; max-height:90vh; overflow-y:auto; animation:slideUp 0.3s ease; }
+    @keyframes slideUp { from { transform:translateY(100%); } to { transform:translateY(0); } }
+    .modal-title { font-size:18px; font-weight:700; color:#f0ead6; margin-bottom:20px; }
+    .modal-close { float:right; background:none; border:none; color:#555; font-size:22px; cursor:pointer; margin-top:-4px; }
+
+    /* ── Form fields ── */
+    .field { margin-bottom:14px; }
+    .field label { display:block; font-family:monospace; font-size:11px; color:#888; letter-spacing:1px; text-transform:uppercase; margin-bottom:6px; }
+    .field input, .field select, .field textarea {
+      width:100%; background:#0d0d1a; border:1px solid #2a2a3e; border-radius:10px;
+      color:#f0ead6; font-family:monospace; font-size:14px; padding:10px 12px;
+      outline:none; -webkit-appearance:none;
+    }
+    .field input:focus, .field select:focus { border-color:#C8A96E; }
+    .field select option { background:#13131f; }
+    .card-field { display:none; }
+    .card-field.show { display:block; }
+
+    /* ── Payment toggle ── */
+    .pay-toggle { display:flex; gap:8px; margin-bottom:14px; }
+    .pay-btn { flex:1; padding:10px; border:1px solid #2a2a3e; border-radius:10px; background:#0d0d1a; color:#888; font-family:monospace; font-size:13px; cursor:pointer; text-align:center; }
+    .pay-btn.active { border-color:#C8A96E; color:#C8A96E; background:#1e1a12; }
+
+    /* ── Submit button ── */
+    .submit-btn { width:100%; padding:14px; background:#C8A96E; color:#0d0d1a; border:none; border-radius:12px; font-family:monospace; font-size:14px; font-weight:700; cursor:pointer; margin-top:8px; letter-spacing:1px; }
+    .submit-btn:disabled { background:#555; color:#333; cursor:not-allowed; }
+    .submit-msg { text-align:center; font-family:monospace; font-size:12px; margin-top:10px; min-height:18px; }
   </style>
 </head>
 <body>
@@ -345,5 +379,159 @@ async function loadData() {
 
 loadData();
 </script>
+
+<!-- 記帳按鈕 -->
+<button class="add-btn" onclick="openModal()" title="新增費用">＋</button>
+
+<!-- 記帳 Modal -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div class="modal-title">📝 新增費用</div>
+
+    <div class="field">
+      <label>日期</label>
+      <input type="date" id="f-date" />
+    </div>
+
+    <div class="field">
+      <label>類別</label>
+      <select id="f-category">
+        <option value="">請選擇類別</option>
+        <option>餐飲</option>
+        <option>交通</option>
+        <option>購物</option>
+        <option>家庭旅遊</option>
+        <option>醫療</option>
+        <option>教育</option>
+        <option>娛樂</option>
+        <option>孝親費</option>
+        <option>紅白包</option>
+        <option>水電瓦斯</option>
+        <option>房貸</option>
+        <option>保險</option>
+        <option>其他</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>說明</label>
+      <input type="text" id="f-desc" placeholder="費用說明" />
+    </div>
+
+    <div class="field">
+      <label>金額（NT$）</label>
+      <input type="number" id="f-amount" placeholder="0" inputmode="numeric" />
+    </div>
+
+    <div class="field">
+      <label>付款方式</label>
+      <div class="pay-toggle">
+        <div class="pay-btn active" id="pay-cash" onclick="selectPay('現金')">💵 現金</div>
+        <div class="pay-btn" id="pay-card" onclick="selectPay('信用卡')">💳 信用卡</div>
+      </div>
+    </div>
+
+    <div class="field card-field" id="card-field">
+      <label>卡別</label>
+      <select id="f-card">
+        <option value="">請選擇卡別</option>
+        <option>台新信用卡</option>
+        <option>永豐信用卡</option>
+        <option>國泰世華</option>
+        <option>玉山世界卡</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>備註（選填）</label>
+      <input type="text" id="f-note" placeholder="備註說明" />
+    </div>
+
+    <button class="submit-btn" id="submitBtn" onclick="submitExpense()">儲存到 Google Sheets</button>
+    <div class="submit-msg" id="submitMsg"></div>
+  </div>
+</div>
+
+<script>
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzasUX1jhoA5QDdwrPiSh9DuFkJe4E6D_dpu7hDy4QXilLkx5wWwrW_5tw6EejXX2RrGw/exec';
+let selectedPay = '現金';
+
+function openModal() {
+  // Set today's date as default
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  const mm = String(today.getMonth()+1).padStart(2,'0');
+  const dd = String(today.getDate()).padStart(2,'0');
+  document.getElementById('f-date').value = `${yyyy}-${mm}-${dd}`;
+  document.getElementById('submitMsg').textContent = '';
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+}
+
+function closeModalOutside(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+}
+
+function selectPay(type) {
+  selectedPay = type;
+  document.getElementById('pay-cash').classList.toggle('active', type === '現金');
+  document.getElementById('pay-card').classList.toggle('active', type === '信用卡');
+  document.getElementById('card-field').classList.toggle('show', type === '信用卡');
+}
+
+async function submitExpense() {
+  const date = document.getElementById('f-date').value;
+  const category = document.getElementById('f-category').value;
+  const description = document.getElementById('f-desc').value;
+  const amount = document.getElementById('f-amount').value;
+  const card = document.getElementById('f-card').value;
+  const note = document.getElementById('f-note').value;
+
+  if (!date || !category || !description || !amount) {
+    document.getElementById('submitMsg').style.color = '#E07B6A';
+    document.getElementById('submitMsg').textContent = '⚠️ 請填寫日期、類別、說明和金額';
+    return;
+  }
+  if (selectedPay === '信用卡' && !card) {
+    document.getElementById('submitMsg').style.color = '#E07B6A';
+    document.getElementById('submitMsg').textContent = '⚠️ 請選擇卡別';
+    return;
+  }
+
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = '儲存中⋯';
+  document.getElementById('submitMsg').textContent = '';
+
+  try {
+    const payload = { date, category, description, paymentMethod: selectedPay, card, amount: parseFloat(amount), note };
+    await fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    document.getElementById('submitMsg').style.color = '#7EB8A4';
+    document.getElementById('submitMsg').textContent = '✅ 已儲存到 Google Sheets！';
+    // Clear form
+    document.getElementById('f-desc').value = '';
+    document.getElementById('f-amount').value = '';
+    document.getElementById('f-note').value = '';
+    document.getElementById('f-category').value = '';
+    setTimeout(() => closeModal(), 1500);
+  } catch(err) {
+    document.getElementById('submitMsg').style.color = '#E07B6A';
+    document.getElementById('submitMsg').textContent = '❌ 儲存失敗，請重試';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '儲存到 Google Sheets';
+  }
+}
+</script>
+
 </body>
 </html>

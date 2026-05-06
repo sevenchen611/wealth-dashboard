@@ -4,310 +4,333 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
   <title>Seven 財富儀表板</title>
-
-  <!-- PWA -->
   <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#0d0d1a" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="財富儀表板" />
   <link rel="apple-touch-icon" href="icon-192.png" />
-
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&display=swap" rel="stylesheet" />
-
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      background: #0d0d1a;
-      color: #f0ead6;
-      font-family: 'Crimson Pro', Georgia, serif;
-      min-height: 100vh;
-      padding: 28px 16px 40px;
-      -webkit-font-smoothing: antialiased;
-    }
+    body { background: #0d0d1a; color: #f0ead6; font-family: 'Crimson Pro', Georgia, serif; min-height: 100vh; padding: 28px 16px 40px; -webkit-font-smoothing: antialiased; }
     .fade { opacity: 0; transform: translateY(10px); animation: fadeUp 0.6s ease forwards; }
-    .fade-1 { animation-delay: 0s; }
-    .fade-2 { animation-delay: 0.12s; }
-    .fade-3 { animation-delay: 0.24s; }
-    .fade-4 { animation-delay: 0.36s; }
-    @keyframes fadeUp { to { opacity: 1; transform: none; } }
-    .eyebrow { font-family: monospace; font-size: 10px; letter-spacing: 4px; color: #C8A96E; text-transform: uppercase; margin-bottom: 6px; }
-    h1 { font-size: 26px; font-weight: 700; color: #f0ead6; line-height: 1.2; }
-    .sub { font-family: monospace; font-size: 12px; color: #555; margin-top: 4px; }
-    .card { background: #13131f; border: 1px solid #2a2a3e; border-radius: 16px; padding: 20px; }
-    .section-label { font-family: monospace; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 14px; }
-    .kpi-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin: 22px 0 16px; }
-    .kpi-card { background: #13131f; border: 1px solid #2a2a3e; border-radius: 14px; padding: 14px 10px; text-align: center; }
-    .kpi-label { font-family: monospace; font-size: 9px; color: #555; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
-    .kpi-value { font-family: monospace; font-size: 12px; font-weight: 700; line-height: 1.3; }
-    .charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
-    .donut-wrap { display: flex; flex-direction: column; align-items: center; }
-    .donut-container { position: relative; }
-    .donut-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none; }
-    .donut-center-label { font-size: 11px; color: #888; letter-spacing: 1px; }
-    .donut-center-value { font-size: 13px; font-weight: 700; color: #f0ead6; margin-top: 1px; }
-    .legend { display: flex; flex-direction: column; gap: 7px; margin-top: 12px; width: 100%; }
-    .legend-row { display: flex; align-items: center; gap: 7px; }
-    .legend-dot { width: 9px; height: 9px; border-radius: 2px; flex-shrink: 0; }
-    .legend-name { flex: 1; font-family: monospace; font-size: 11px; color: #aaa; }
-    .legend-vals { display: flex; flex-direction: column; align-items: flex-end; gap: 1px; }
-    .legend-amount { font-family: monospace; font-size: 11px; color: #e0d8c8; }
-    .legend-pct { font-family: monospace; font-size: 9px; color: #555; }
-    .bottom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .health-item { margin-bottom: 14px; }
-    .health-header { display: flex; justify-content: space-between; margin-bottom: 5px; }
-    .health-name { font-family: monospace; font-size: 11px; color: #aaa; }
-    .health-val { font-family: monospace; font-size: 11px; font-weight: 700; }
-    .health-track { height: 5px; background: #1e1e2e; border-radius: 3px; overflow: hidden; }
-    .health-fill { height: 100%; border-radius: 3px; transition: width 1.2s cubic-bezier(0.4,0,0.2,1); width: 0; }
-    .health-note { font-family: monospace; font-size: 10px; color: #444; margin-top: 2px; }
-    .footer { margin-top: 24px; text-align: center; font-family: monospace; font-size: 10px; color: #2a2a3e; }
+    .fade-1{animation-delay:0s} .fade-2{animation-delay:.12s} .fade-3{animation-delay:.24s} .fade-4{animation-delay:.36s}
+    @keyframes fadeUp { to { opacity:1; transform:none; } }
+    .eyebrow { font-family:monospace; font-size:10px; letter-spacing:4px; color:#C8A96E; text-transform:uppercase; margin-bottom:6px; }
+    h1 { font-size:26px; font-weight:700; color:#f0ead6; line-height:1.2; }
+    .sub { font-family:monospace; font-size:12px; color:#555; margin-top:4px; }
+    .card { background:#13131f; border:1px solid #2a2a3e; border-radius:16px; padding:20px; }
+    .section-label { font-family:monospace; font-size:10px; letter-spacing:3px; text-transform:uppercase; margin-bottom:14px; }
+    .kpi-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin:22px 0 16px; }
+    .kpi-card { background:#13131f; border:1px solid #2a2a3e; border-radius:14px; padding:14px 10px; text-align:center; }
+    .kpi-label { font-family:monospace; font-size:9px; color:#555; letter-spacing:1px; text-transform:uppercase; margin-bottom:6px; }
+    .kpi-value { font-family:monospace; font-size:12px; font-weight:700; line-height:1.3; }
+    .charts-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:16px; }
+    .donut-wrap { display:flex; flex-direction:column; align-items:center; }
+    .donut-container { position:relative; }
+    .donut-center { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; pointer-events:none; }
+    .donut-center-label { font-size:11px; color:#888; letter-spacing:1px; }
+    .donut-center-value { font-size:13px; font-weight:700; color:#f0ead6; margin-top:1px; }
+    .legend { display:flex; flex-direction:column; gap:7px; margin-top:12px; width:100%; }
+    .legend-row { display:flex; align-items:center; gap:7px; }
+    .legend-dot { width:9px; height:9px; border-radius:2px; flex-shrink:0; }
+    .legend-name { flex:1; font-family:monospace; font-size:11px; color:#aaa; }
+    .legend-vals { display:flex; flex-direction:column; align-items:flex-end; gap:1px; }
+    .legend-amount { font-family:monospace; font-size:11px; color:#e0d8c8; }
+    .legend-pct { font-family:monospace; font-size:9px; color:#555; }
+    .bottom-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .health-item { margin-bottom:14px; }
+    .health-header { display:flex; justify-content:space-between; margin-bottom:5px; }
+    .health-name { font-family:monospace; font-size:11px; color:#aaa; }
+    .health-val { font-family:monospace; font-size:11px; font-weight:700; }
+    .health-track { height:5px; background:#1e1e2e; border-radius:3px; overflow:hidden; }
+    .health-fill { height:100%; border-radius:3px; transition:width 1.2s cubic-bezier(0.4,0,0.2,1); width:0; }
+    .health-note { font-family:monospace; font-size:10px; color:#444; margin-top:2px; }
+    .footer { margin-top:24px; text-align:center; font-family:monospace; font-size:10px; color:#2a2a3e; }
+    .loading { text-align:center; font-family:monospace; font-size:13px; color:#555; padding:60px 0; }
+    .refresh-btn { position:fixed; bottom:24px; right:20px; background:#C8A96E; color:#0d0d1a; border:none; border-radius:50%; width:44px; height:44px; font-size:20px; cursor:pointer; box-shadow:0 4px 12px rgba(200,169,110,0.4); z-index:99; }
   </style>
 </head>
 <body>
 
-<div class="fade fade-1">
-  <div class="eyebrow">個人財務儀表板 · 2026年5月</div>
-  <h1>財富資產負債總覽</h1>
-  <div class="sub">家庭視角 · Seven</div>
-</div>
-
-<div class="kpi-grid fade fade-2">
-  <div class="kpi-card">
-    <div class="kpi-label">總資產</div>
-    <div class="kpi-value" style="color:#C8A96E">NT$32.5M</div>
-  </div>
-  <div class="kpi-card">
-    <div class="kpi-label">總負債</div>
-    <div class="kpi-value" style="color:#E07B6A">NT$9.2M</div>
-  </div>
-  <div class="kpi-card">
-    <div class="kpi-label">✨ 淨資產</div>
-    <div class="kpi-value" style="color:#7EB8A4">NT$23.3M</div>
-  </div>
-</div>
-
-<div class="charts-grid fade fade-3">
-  <!-- Assets -->
-  <div class="card">
-    <div class="section-label" style="color:#C8A96E">資產配置</div>
-    <div class="donut-wrap">
-      <div class="donut-container">
-        <svg id="assetSvg" width="140" height="140" style="transform:rotate(-90deg)"></svg>
-        <div class="donut-center">
-          <div class="donut-center-label">總資產</div>
-          <div class="donut-center-value">32.5M</div>
-        </div>
-      </div>
-      <div class="legend">
-        <div class="legend-row">
-          <div class="legend-dot" style="background:#C8A96E"></div>
-          <div class="legend-name">不動產</div>
-          <div class="legend-vals">
-            <div class="legend-amount">NT$25,000,000</div>
-            <div class="legend-pct">76.8%</div>
-          </div>
-        </div>
-        <div class="legend-row">
-          <div class="legend-dot" style="background:#7EB8A4"></div>
-          <div class="legend-name">現金存款</div>
-          <div class="legend-vals">
-            <div class="legend-amount">NT$6,279,174</div>
-            <div class="legend-pct">19.3%</div>
-          </div>
-        </div>
-        <div class="legend-row">
-          <div class="legend-dot" style="background:#A89BC2"></div>
-          <div class="legend-name">動產</div>
-          <div class="legend-vals">
-            <div class="legend-amount">NT$1,247,641</div>
-            <div class="legend-pct">3.8%</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Liabilities -->
-  <div class="card">
-    <div class="section-label" style="color:#E07B6A">負債結構</div>
-    <div class="donut-wrap">
-      <div class="donut-container">
-        <svg id="liabSvg" width="140" height="140" style="transform:rotate(-90deg)"></svg>
-        <div class="donut-center">
-          <div class="donut-center-label">總負債</div>
-          <div class="donut-center-value">9.2M</div>
-        </div>
-      </div>
-      <div class="legend">
-        <div class="legend-row">
-          <div class="legend-dot" style="background:#E07B6A"></div>
-          <div class="legend-name">永和房貸</div>
-          <div class="legend-vals">
-            <div class="legend-amount">NT$8,701,684</div>
-            <div class="legend-pct">94.1%</div>
-          </div>
-        </div>
-        <div class="legend-row">
-          <div class="legend-dot" style="background:#E8A87C"></div>
-          <div class="legend-name">台中房貸</div>
-          <div class="legend-vals">
-            <div class="legend-amount">NT$547,283</div>
-            <div class="legend-pct">5.9%</div>
-          </div>
-        </div>
-        <div class="legend-row">
-          <div class="legend-dot" style="background:#EDD480"></div>
-          <div class="legend-name">信用卡未繳</div>
-          <div class="legend-vals">
-            <div class="legend-amount">NT$0</div>
-            <div class="legend-pct">0.0%</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="bottom-grid fade fade-4">
-  <!-- Health -->
-  <div class="card">
-    <div class="section-label" style="color:#7EB8A4">財務健康指標</div>
-    <div class="health-item">
-      <div class="health-header">
-        <span class="health-name">負債比</span>
-        <span class="health-val" style="color:#7EB8A4">28.4% ✅</span>
-      </div>
-      <div class="health-track"><div class="health-fill" style="background:#7EB8A4" data-w="28.4"></div></div>
-      <div class="health-note">&lt; 50%</div>
-    </div>
-    <div class="health-item">
-      <div class="health-header">
-        <span class="health-name">淨值/資產</span>
-        <span class="health-val" style="color:#7EB8A4">71.6% ✅</span>
-      </div>
-      <div class="health-track"><div class="health-fill" style="background:#7EB8A4" data-w="71.6"></div></div>
-      <div class="health-note">&gt; 50%</div>
-    </div>
-    <div class="health-item">
-      <div class="health-header">
-        <span class="health-name">流動性</span>
-        <span class="health-val" style="color:#7EB8A4">19.3% ✅</span>
-      </div>
-      <div class="health-track"><div class="health-fill" style="background:#7EB8A4" data-w="19.3"></div></div>
-      <div class="health-note">&gt; 10%</div>
-    </div>
-  </div>
-
-  <!-- Net Worth -->
-  <div class="card">
-    <div class="section-label" style="color:#A89BC2">淨值比例</div>
-    <div class="donut-wrap">
-      <div class="donut-container">
-        <svg id="netSvg" width="140" height="140" style="transform:rotate(-90deg)"></svg>
-        <div class="donut-center">
-          <div class="donut-center-label">負債比</div>
-          <div class="donut-center-value">28.4%</div>
-        </div>
-      </div>
-      <div class="legend">
-        <div class="legend-row">
-          <div class="legend-dot" style="background:#7EB8A4"></div>
-          <div class="legend-name">淨資產</div>
-          <div class="legend-vals">
-            <div class="legend-amount">NT$23,277,849</div>
-            <div class="legend-pct">71.6%</div>
-          </div>
-        </div>
-        <div class="legend-row">
-          <div class="legend-dot" style="background:#E07B6A"></div>
-          <div class="legend-name">永和房貸</div>
-          <div class="legend-vals">
-            <div class="legend-amount">NT$8,701,684</div>
-            <div class="legend-pct">26.8%</div>
-          </div>
-        </div>
-        <div class="legend-row">
-          <div class="legend-dot" style="background:#E8A87C"></div>
-          <div class="legend-name">台中房貸</div>
-          <div class="legend-vals">
-            <div class="legend-amount">NT$547,283</div>
-            <div class="legend-pct">1.7%</div>
-          </div>
-        </div>
-        <div class="legend-row">
-          <div class="legend-dot" style="background:#EDD480"></div>
-          <div class="legend-name">信用卡未繳</div>
-          <div class="legend-vals">
-            <div class="legend-amount">NT$0</div>
-            <div class="legend-pct">0.0%</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="footer">資料來源：個人財務管理_主檔 · 2026-05-06</div>
+<div id="app"><div class="loading">載入資料中⋯</div></div>
+<button class="refresh-btn" onclick="loadData()" title="重新整理">↻</button>
 
 <script>
-  function drawDonut(svgId, segments, size, stroke) {
-    const svg = document.getElementById(svgId);
-    const r = (size - stroke) / 2;
-    const circ = 2 * Math.PI * r;
-    const cx = size / 2, cy = size / 2;
-    const total = segments.reduce((s, d) => s + d.v, 0);
-    const bg = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    bg.setAttribute('cx', cx); bg.setAttribute('cy', cy); bg.setAttribute('r', r);
-    bg.setAttribute('fill', 'none'); bg.setAttribute('stroke', '#1e1e2e');
-    bg.setAttribute('stroke-width', stroke);
-    svg.appendChild(bg);
-    let offset = circ * 0.25;
-    segments.forEach(seg => {
-      const pct = seg.v / total;
-      const dash = circ * pct;
-      const gap = circ - dash;
-      const el = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-      el.setAttribute('cx', cx); el.setAttribute('cy', cy); el.setAttribute('r', r);
-      el.setAttribute('fill', 'none'); el.setAttribute('stroke', seg.c);
-      el.setAttribute('stroke-width', stroke);
-      el.setAttribute('stroke-dasharray', `0 ${circ}`);
-      el.setAttribute('stroke-dashoffset', -offset + circ * 0.25);
-      el.style.transition = 'stroke-dasharray 1.2s cubic-bezier(0.4,0,0.2,1)';
-      svg.appendChild(el);
-      setTimeout(() => el.setAttribute('stroke-dasharray', `${dash} ${gap}`), 100);
-      offset -= dash;
-    });
+const BASE = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSvYb33rWFBFOyEk-MgfebwLCcoAewDhxefHet9mf12dgaaktLTypyKj_knfVGkcgb8QO7ioUgngcOf';
+const GID_BALANCE = '1391537993'; // 月度餘額
+const GID_CARD    = '1703033144'; // 月度卡費
+
+// Parse CSV text into array of arrays
+function parseCSV(text) {
+  const rows = [];
+  const lines = text.split(/\r?\n/);
+  for (const line of lines) {
+    if (!line.trim()) continue;
+    const cols = [];
+    let cur = '', inQ = false;
+    for (let i = 0; i < line.length; i++) {
+      const c = line[i];
+      if (c === '"') { inQ = !inQ; }
+      else if (c === ',' && !inQ) { cols.push(cur.trim()); cur = ''; }
+      else { cur += c; }
+    }
+    cols.push(cur.trim());
+    rows.push(cols);
   }
+  return rows;
+}
 
-  drawDonut('assetSvg', [
-    { v: 25000000, c: '#C8A96E' },
-    { v: 6279174,  c: '#7EB8A4' },
-    { v: 1247641,  c: '#A89BC2' },
-  ], 140, 22);
+function toNum(s) {
+  if (!s || s === '-') return 0;
+  return parseFloat(s.replace(/[^\d.-]/g, '')) || 0;
+}
 
-  drawDonut('liabSvg', [
-    { v: 8701684, c: '#E07B6A' },
-    { v: 547283,  c: '#E8A87C' },
-    { v: 1,       c: '#EDD480' },
-  ], 140, 22);
+function fmtM(n) {
+  if (n >= 1000000) return (n/1000000).toFixed(1) + 'M';
+  if (n >= 1000) return (n/1000).toFixed(0) + 'K';
+  return n.toLocaleString();
+}
 
-  drawDonut('netSvg', [
-    { v: 23277849, c: '#7EB8A4' },
-    { v: 8701684,  c: '#E07B6A' },
-    { v: 547283,   c: '#E8A87C' },
-    { v: 1,        c: '#EDD480' },
-  ], 140, 22);
+function fmtTWD(n) {
+  return 'NT$' + Math.round(n).toLocaleString('zh-TW');
+}
 
-  document.querySelectorAll('.health-fill').forEach(el => {
-    const w = el.dataset.w;
-    setTimeout(() => { el.style.width = w + '%'; }, 300);
+function pct(a, b) { return b ? ((a/b)*100).toFixed(1) : '0.0'; }
+
+async function fetchCSV(gid) {
+  const url = `${BASE}/pub?output=csv&gid=${gid}&cachebust=${Date.now()}`;
+  const res = await fetch(url);
+  return parseCSV(await res.text());
+}
+
+function drawDonut(svgEl, segments, size, stroke) {
+  svgEl.innerHTML = '';
+  const r = (size - stroke) / 2;
+  const circ = 2 * Math.PI * r;
+  const cx = size / 2, cy = size / 2;
+  const total = segments.reduce((s, d) => s + d.v, 0);
+  const bg = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  bg.setAttribute('cx', cx); bg.setAttribute('cy', cy); bg.setAttribute('r', r);
+  bg.setAttribute('fill', 'none'); bg.setAttribute('stroke', '#1e1e2e');
+  bg.setAttribute('stroke-width', stroke);
+  svgEl.appendChild(bg);
+  let offset = circ * 0.25;
+  segments.forEach(seg => {
+    const dash = circ * (seg.v / total);
+    const el = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    el.setAttribute('cx', cx); el.setAttribute('cy', cy); el.setAttribute('r', r);
+    el.setAttribute('fill', 'none'); el.setAttribute('stroke', seg.c);
+    el.setAttribute('stroke-width', stroke);
+    el.setAttribute('stroke-dasharray', `0 ${circ}`);
+    el.setAttribute('stroke-dashoffset', -offset + circ * 0.25);
+    el.style.transition = 'stroke-dasharray 1.2s cubic-bezier(0.4,0,0.2,1)';
+    svgEl.appendChild(el);
+    setTimeout(() => el.setAttribute('stroke-dasharray', `${dash} ${circ - dash}`), 80);
+    offset -= dash;
   });
+}
 
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js');
+function legendHTML(items, total) {
+  return items.map(it => `
+    <div class="legend-row">
+      <div class="legend-dot" style="background:${it.c}"></div>
+      <div class="legend-name">${it.label}</div>
+      <div class="legend-vals">
+        <div class="legend-amount">${fmtTWD(it.v)}</div>
+        <div class="legend-pct">${pct(it.v, total)}%</div>
+      </div>
+    </div>`).join('');
+}
+
+async function loadData() {
+  document.getElementById('app').innerHTML = '<div class="loading">載入資料中⋯</div>';
+  try {
+    const [balRows, cardRows] = await Promise.all([
+      fetchCSV(GID_BALANCE),
+      fetchCSV(GID_CARD)
+    ]);
+
+    // Find latest month in 月度餘額 (col 0)
+    const dataRows = balRows.filter(r => /^\d{4}-\d{2}/.test(r[0]));
+    const months = [...new Set(dataRows.map(r => r[0]))].sort();
+    const latestMonth = months[months.length - 1];
+    const latest = dataRows.filter(r => r[0] === latestMonth);
+
+    // Aggregate by 大類別 (col 3) using TWD換算 (col 7)
+    let 不動產 = 0, 現金存款 = 0, 動產 = 0, 房貸 = 0, 信用卡 = 0;
+    for (const r of latest) {
+      const cat = r[3], val = toNum(r[7]);
+      if (cat === '不動產') 不動產 += val;
+      else if (cat === '現金存款') 現金存款 += val;
+      else if (cat === '動產') 動產 += val;
+      else if (cat === '負債') {
+        const name = r[2];
+        if (name && name.includes('房貸')) 房貸 += val;
+        else if (name && name.includes('信用卡')) 信用卡 += val;
+        else 房貸 += val; // fallback
+      }
+    }
+
+    // Find individual liabilities
+    const 永和房貸 = toNum(latest.find(r => r[2]==='永和房貸')?.[7] || '0');
+    const 台中房貸 = toNum(latest.find(r => r[2]==='台中房貸')?.[7] || '0');
+    const 信用卡未繳 = toNum(latest.find(r => r[2]==='信用卡未繳')?.[7] || '0');
+
+    const totalAssets = 不動產 + 現金存款 + 動產;
+    const totalLiab = 永和房貸 + 台中房貸 + 信用卡未繳;
+    const netWorth = totalAssets - totalLiab;
+    const debtRatio = pct(totalLiab, totalAssets);
+    const netRatio = pct(netWorth, totalAssets);
+    const liquidity = pct(現金存款, totalAssets);
+
+    // Format month label
+    const [yr, mo] = latestMonth.split('-');
+    const monthLabel = `${yr}年${parseInt(mo)}月`;
+
+    // Render
+    document.getElementById('app').innerHTML = `
+      <div class="fade fade-1">
+        <div class="eyebrow">個人財務儀表板 · ${monthLabel}</div>
+        <h1>財富資產負債總覽</h1>
+        <div class="sub">家庭視角 · Seven</div>
+      </div>
+
+      <div class="kpi-grid fade fade-2">
+        <div class="kpi-card">
+          <div class="kpi-label">總資產</div>
+          <div class="kpi-value" style="color:#C8A96E">${fmtTWD(totalAssets)}</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">總負債</div>
+          <div class="kpi-value" style="color:#E07B6A">${fmtTWD(totalLiab)}</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">✨ 淨資產</div>
+          <div class="kpi-value" style="color:#7EB8A4">${fmtTWD(netWorth)}</div>
+        </div>
+      </div>
+
+      <div class="charts-grid fade fade-3">
+        <div class="card">
+          <div class="section-label" style="color:#C8A96E">資產配置</div>
+          <div class="donut-wrap">
+            <div class="donut-container">
+              <svg id="assetSvg" width="140" height="140" style="transform:rotate(-90deg)"></svg>
+              <div class="donut-center">
+                <div class="donut-center-label">總資產</div>
+                <div class="donut-center-value">${fmtM(totalAssets)}</div>
+              </div>
+            </div>
+            <div class="legend">
+              ${legendHTML([
+                {label:'不動產', v:不動產, c:'#C8A96E'},
+                {label:'現金存款', v:現金存款, c:'#7EB8A4'},
+                {label:'動產', v:動產, c:'#A89BC2'}
+              ], totalAssets)}
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="section-label" style="color:#E07B6A">負債結構</div>
+          <div class="donut-wrap">
+            <div class="donut-container">
+              <svg id="liabSvg" width="140" height="140" style="transform:rotate(-90deg)"></svg>
+              <div class="donut-center">
+                <div class="donut-center-label">總負債</div>
+                <div class="donut-center-value">${fmtM(totalLiab)}</div>
+              </div>
+            </div>
+            <div class="legend">
+              ${legendHTML([
+                {label:'永和房貸', v:永和房貸, c:'#E07B6A'},
+                {label:'台中房貸', v:台中房貸, c:'#E8A87C'},
+                {label:'信用卡未繳', v:信用卡未繳||0.001, c:'#EDD480'}
+              ], totalLiab || 1)}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bottom-grid fade fade-4">
+        <div class="card">
+          <div class="section-label" style="color:#7EB8A4">財務健康指標</div>
+          <div class="health-item">
+            <div class="health-header">
+              <span class="health-name">負債比</span>
+              <span class="health-val" style="color:#7EB8A4">${debtRatio}% ✅</span>
+            </div>
+            <div class="health-track"><div class="health-fill" style="background:#7EB8A4" data-w="${debtRatio}"></div></div>
+            <div class="health-note">&lt; 50%</div>
+          </div>
+          <div class="health-item">
+            <div class="health-header">
+              <span class="health-name">淨值/資產</span>
+              <span class="health-val" style="color:#7EB8A4">${netRatio}% ✅</span>
+            </div>
+            <div class="health-track"><div class="health-fill" style="background:#7EB8A4" data-w="${netRatio}"></div></div>
+            <div class="health-note">&gt; 50%</div>
+          </div>
+          <div class="health-item">
+            <div class="health-header">
+              <span class="health-name">流動性</span>
+              <span class="health-val" style="color:#7EB8A4">${liquidity}% ✅</span>
+            </div>
+            <div class="health-track"><div class="health-fill" style="background:#7EB8A4" data-w="${liquidity}"></div></div>
+            <div class="health-note">&gt; 10%</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="section-label" style="color:#A89BC2">淨值比例</div>
+          <div class="donut-wrap">
+            <div class="donut-container">
+              <svg id="netSvg" width="140" height="140" style="transform:rotate(-90deg)"></svg>
+              <div class="donut-center">
+                <div class="donut-center-label">負債比</div>
+                <div class="donut-center-value">${debtRatio}%</div>
+              </div>
+            </div>
+            <div class="legend">
+              ${legendHTML([
+                {label:'淨資產', v:netWorth, c:'#7EB8A4'},
+                {label:'永和房貸', v:永和房貸, c:'#E07B6A'},
+                {label:'台中房貸', v:台中房貸, c:'#E8A87C'},
+                {label:'信用卡未繳', v:信用卡未繳||0.001, c:'#EDD480'}
+              ], totalAssets)}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer">資料來源：個人財務管理_主檔 · 即時同步</div>
+    `;
+
+    // Draw donuts
+    drawDonut(document.getElementById('assetSvg'),
+      [{v:不動產,c:'#C8A96E'},{v:現金存款,c:'#7EB8A4'},{v:動產,c:'#A89BC2'}], 140, 22);
+    drawDonut(document.getElementById('liabSvg'),
+      [{v:永和房貸,c:'#E07B6A'},{v:台中房貸,c:'#E8A87C'},{v:信用卡未繳||0.001,c:'#EDD480'}], 140, 22);
+    drawDonut(document.getElementById('netSvg'),
+      [{v:netWorth,c:'#7EB8A4'},{v:永和房貸,c:'#E07B6A'},{v:台中房貸,c:'#E8A87C'},{v:信用卡未繳||0.001,c:'#EDD480'}], 140, 22);
+
+    // Animate health bars
+    setTimeout(() => {
+      document.querySelectorAll('.health-fill').forEach(el => {
+        el.style.width = el.dataset.w + '%';
+      });
+    }, 300);
+
+  } catch(e) {
+    document.getElementById('app').innerHTML = `<div class="loading">❌ 載入失敗，請按右下角按鈕重試<br><small>${e.message}</small></div>`;
   }
+}
+
+loadData();
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js');
+}
 </script>
 </body>
 </html>

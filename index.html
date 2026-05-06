@@ -58,7 +58,7 @@
     .refresh-btn { position:fixed; bottom:24px; right:20px; background:#C8A96E; color:#0d0d1a; border:none; border-radius:50%; width:44px; height:44px; font-size:20px; cursor:pointer; box-shadow:0 4px 12px rgba(200,169,110,0.4); z-index:99; }
 
     /* ── 記帳按鈕 ── */
-    .add-btn { position:fixed; bottom:24px; left:20px; background:#C8A96E; color:#0d0d1a; border:none; border-radius:50%; width:44px; height:44px; font-size:22px; cursor:pointer; box-shadow:0 4px 12px rgba(200,169,110,0.4); z-index:99; display:flex; align-items:center; justify-content:center; }
+    .add-btn { position:fixed; bottom:24px; left:50%; transform:translateX(-50%); background:#C8A96E; color:#0d0d1a; border:none; border-radius:24px; height:48px; padding:0 28px; font-size:15px; font-weight:700; font-family:monospace; cursor:pointer; box-shadow:0 4px 16px rgba(200,169,110,0.5); z-index:99; display:flex; align-items:center; gap:8px; white-space:nowrap; letter-spacing:1px; }
 
     /* ── Modal overlay ── */
     .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:200; align-items:flex-end; }
@@ -381,7 +381,7 @@ loadData();
 </script>
 
 <!-- 記帳按鈕 -->
-<button class="add-btn" onclick="openModal()" title="新增費用">＋</button>
+<button class="add-btn" onclick="openModal()">＋ 新增費用</button>
 
 <!-- 記帳 Modal -->
 <div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">

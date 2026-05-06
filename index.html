@@ -100,7 +100,7 @@
 <script>
 const BASE = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSvYb33rWFBFOyEk-MgfebwLCcoAewDhxefHet9mf12dgaaktLTypyKj_knfVGkcgb8QO7ioUgngcOf';
 const GID_BALANCE = '1391537993'; // 月度餘額
-const GID_CARD    = '1703033144'; // 月度卡費
+const GID_CARD    = '1936025822'; // 信用卡帳單明細（新分頁）
 
 // Parse CSV text into array of arrays
 function parseCSV(text) {
@@ -220,7 +220,24 @@ async function loadData() {
     // Find individual liabilities
     const 永和房貸 = toNum(latest.find(r => r[2]==='永和房貸')?.[7] || '0');
     const 台中房貸 = toNum(latest.find(r => r[2]==='台中房貸')?.[7] || '0');
-    const 信用卡未繳 = toNum(latest.find(r => r[2]==='信用卡未繳')?.[7] || '0');
+    // 信用卡未繳 = 從信用卡帳單明細計算本期 + 未出帳
+    let 信用卡未繳 = 0;
+    if (cardRows.length > 1) {
+      for (let i = 1; i < cardRows.length; i++) {
+        const row = cardRows[i];
+        const month = row[0];
+        const status = row[8];  // 繳款狀態
+        const amtTWD = toNum(row[6]); // 累計金額(TWD)
+        // 本月的本期（未繳）+ 本月的未出帳
+        if (month === latestMonth && status === '未繳') {
+          信用卡未繳 += amtTWD;
+        }
+      }
+    }
+    // 如果信用卡帳單明細為空，就用月度餘額的 A18
+    if (信用卡未繳 === 0) {
+      信用卡未繳 = toNum(latest.find(r => r[2]==='信用卡未繳')?.[7] || '0');
+    }
 
     const totalAssets = 不動產 + 現金存款 + 動產;
     const totalLiab = 永和房貸 + 台中房貸 + 信用卡未繳;
@@ -454,7 +471,7 @@ loadData();
 </div>
 
 <script>
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzasUX1jhoA5QDdwrPiSh9DuFkJe4E6D_dpu7hDy4QXilLkx5wWwrW_5tw6EejXX2RrGw/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzYdeQAmpxL2pgrd6fhRChV-1AY6PCZeEZzTgTkOLV1iUjFyc6qJewYaXYBGG6MwioEvg/exec';
 let selectedPay = '現金';
 
 function openModal() {

@@ -18,7 +18,6 @@
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       background: #0d0d1a;
       color: #f0ead6;
@@ -27,81 +26,27 @@
       padding: 28px 16px 40px;
       -webkit-font-smoothing: antialiased;
     }
-
-    /* ── Fade-in animation ── */
     .fade { opacity: 0; transform: translateY(10px); animation: fadeUp 0.6s ease forwards; }
     .fade-1 { animation-delay: 0s; }
     .fade-2 { animation-delay: 0.12s; }
     .fade-3 { animation-delay: 0.24s; }
     .fade-4 { animation-delay: 0.36s; }
     @keyframes fadeUp { to { opacity: 1; transform: none; } }
-
-    /* ── Header ── */
-    .eyebrow {
-      font-family: monospace;
-      font-size: 10px;
-      letter-spacing: 4px;
-      color: #C8A96E;
-      text-transform: uppercase;
-      margin-bottom: 6px;
-    }
+    .eyebrow { font-family: monospace; font-size: 10px; letter-spacing: 4px; color: #C8A96E; text-transform: uppercase; margin-bottom: 6px; }
     h1 { font-size: 26px; font-weight: 700; color: #f0ead6; line-height: 1.2; }
     .sub { font-family: monospace; font-size: 12px; color: #555; margin-top: 4px; }
-
-    /* ── Card ── */
-    .card {
-      background: #13131f;
-      border: 1px solid #2a2a3e;
-      border-radius: 16px;
-      padding: 20px;
-    }
-
-    .section-label {
-      font-family: monospace;
-      font-size: 10px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      margin-bottom: 14px;
-    }
-
-    /* ── KPI row ── */
-    .kpi-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 10px;
-      margin: 22px 0 16px;
-    }
-    .kpi-card {
-      background: #13131f;
-      border: 1px solid #2a2a3e;
-      border-radius: 14px;
-      padding: 14px 10px;
-      text-align: center;
-    }
+    .card { background: #13131f; border: 1px solid #2a2a3e; border-radius: 16px; padding: 20px; }
+    .section-label { font-family: monospace; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 14px; }
+    .kpi-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin: 22px 0 16px; }
+    .kpi-card { background: #13131f; border: 1px solid #2a2a3e; border-radius: 14px; padding: 14px 10px; text-align: center; }
     .kpi-label { font-family: monospace; font-size: 9px; color: #555; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
     .kpi-value { font-family: monospace; font-size: 12px; font-weight: 700; line-height: 1.3; }
-
-    /* ── Charts grid ── */
-    .charts-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 16px;
-    }
-
-    /* ── Donut ── */
+    .charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
     .donut-wrap { display: flex; flex-direction: column; align-items: center; }
     .donut-container { position: relative; }
-    .donut-center {
-      position: absolute; inset: 0;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      pointer-events: none;
-    }
+    .donut-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none; }
     .donut-center-label { font-size: 11px; color: #888; letter-spacing: 1px; }
     .donut-center-value { font-size: 13px; font-weight: 700; color: #f0ead6; margin-top: 1px; }
-
-    /* ── Legend ── */
     .legend { display: flex; flex-direction: column; gap: 7px; margin-top: 12px; width: 100%; }
     .legend-row { display: flex; align-items: center; gap: 7px; }
     .legend-dot { width: 9px; height: 9px; border-radius: 2px; flex-shrink: 0; }
@@ -109,15 +54,7 @@
     .legend-vals { display: flex; flex-direction: column; align-items: flex-end; gap: 1px; }
     .legend-amount { font-family: monospace; font-size: 11px; color: #e0d8c8; }
     .legend-pct { font-family: monospace; font-size: 9px; color: #555; }
-
-    /* ── Bottom grid ── */
-    .bottom-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    /* ── Health bars ── */
+    .bottom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     .health-item { margin-bottom: 14px; }
     .health-header { display: flex; justify-content: space-between; margin-bottom: 5px; }
     .health-name { font-family: monospace; font-size: 11px; color: #aaa; }
@@ -125,29 +62,25 @@
     .health-track { height: 5px; background: #1e1e2e; border-radius: 3px; overflow: hidden; }
     .health-fill { height: 100%; border-radius: 3px; transition: width 1.2s cubic-bezier(0.4,0,0.2,1); width: 0; }
     .health-note { font-family: monospace; font-size: 10px; color: #444; margin-top: 2px; }
-
-    /* ── Footer ── */
     .footer { margin-top: 24px; text-align: center; font-family: monospace; font-size: 10px; color: #2a2a3e; }
   </style>
 </head>
 <body>
 
-<!-- Header -->
 <div class="fade fade-1">
-  <div class="eyebrow">個人財務儀表板 · 2026年4月</div>
+  <div class="eyebrow">個人財務儀表板 · 2026年5月</div>
   <h1>財富資產負債總覽</h1>
   <div class="sub">家庭視角 · Seven</div>
 </div>
 
-<!-- KPI -->
 <div class="kpi-grid fade fade-2">
   <div class="kpi-card">
     <div class="kpi-label">總資產</div>
-    <div class="kpi-value" style="color:#C8A96E">NT$32.6M</div>
+    <div class="kpi-value" style="color:#C8A96E">NT$32.5M</div>
   </div>
   <div class="kpi-card">
     <div class="kpi-label">總負債</div>
-    <div class="kpi-value" style="color:#E07B6A">NT$9.3M</div>
+    <div class="kpi-value" style="color:#E07B6A">NT$9.2M</div>
   </div>
   <div class="kpi-card">
     <div class="kpi-label">✨ 淨資產</div>
@@ -155,9 +88,7 @@
   </div>
 </div>
 
-<!-- Charts -->
 <div class="charts-grid fade fade-3">
-
   <!-- Assets -->
   <div class="card">
     <div class="section-label" style="color:#C8A96E">資產配置</div>
@@ -166,7 +97,7 @@
         <svg id="assetSvg" width="140" height="140" style="transform:rotate(-90deg)"></svg>
         <div class="donut-center">
           <div class="donut-center-label">總資產</div>
-          <div class="donut-center-value">32.6M</div>
+          <div class="donut-center-value">32.5M</div>
         </div>
       </div>
       <div class="legend">
@@ -175,15 +106,15 @@
           <div class="legend-name">不動產</div>
           <div class="legend-vals">
             <div class="legend-amount">NT$25,000,000</div>
-            <div class="legend-pct">76.7%</div>
+            <div class="legend-pct">76.8%</div>
           </div>
         </div>
         <div class="legend-row">
           <div class="legend-dot" style="background:#7EB8A4"></div>
           <div class="legend-name">現金存款</div>
           <div class="legend-vals">
-            <div class="legend-amount">NT$6,356,251</div>
-            <div class="legend-pct">19.5%</div>
+            <div class="legend-amount">NT$6,279,174</div>
+            <div class="legend-pct">19.3%</div>
           </div>
         </div>
         <div class="legend-row">
@@ -206,7 +137,7 @@
         <svg id="liabSvg" width="140" height="140" style="transform:rotate(-90deg)"></svg>
         <div class="donut-center">
           <div class="donut-center-label">總負債</div>
-          <div class="donut-center-value">9.3M</div>
+          <div class="donut-center-value">9.2M</div>
         </div>
       </div>
       <div class="legend">
@@ -215,7 +146,7 @@
           <div class="legend-name">永和房貸</div>
           <div class="legend-vals">
             <div class="legend-amount">NT$8,701,684</div>
-            <div class="legend-pct">93.2%</div>
+            <div class="legend-pct">94.1%</div>
           </div>
         </div>
         <div class="legend-row">
@@ -230,8 +161,8 @@
           <div class="legend-dot" style="background:#EDD480"></div>
           <div class="legend-name">信用卡未繳</div>
           <div class="legend-vals">
-            <div class="legend-amount">NT$88,244</div>
-            <div class="legend-pct">0.9%</div>
+            <div class="legend-amount">NT$0</div>
+            <div class="legend-pct">0.0%</div>
           </div>
         </div>
       </div>
@@ -239,39 +170,37 @@
   </div>
 </div>
 
-<!-- Bottom -->
 <div class="bottom-grid fade fade-4">
-
   <!-- Health -->
   <div class="card">
     <div class="section-label" style="color:#7EB8A4">財務健康指標</div>
     <div class="health-item">
       <div class="health-header">
         <span class="health-name">負債比</span>
-        <span class="health-val" style="color:#7EB8A4">28.6% ✅</span>
+        <span class="health-val" style="color:#7EB8A4">28.4% ✅</span>
       </div>
-      <div class="health-track"><div class="health-fill" style="background:#7EB8A4" data-w="28.6"></div></div>
+      <div class="health-track"><div class="health-fill" style="background:#7EB8A4" data-w="28.4"></div></div>
       <div class="health-note">&lt; 50%</div>
     </div>
     <div class="health-item">
       <div class="health-header">
         <span class="health-name">淨值/資產</span>
-        <span class="health-val" style="color:#7EB8A4">71.4% ✅</span>
+        <span class="health-val" style="color:#7EB8A4">71.6% ✅</span>
       </div>
-      <div class="health-track"><div class="health-fill" style="background:#7EB8A4" data-w="71.4"></div></div>
+      <div class="health-track"><div class="health-fill" style="background:#7EB8A4" data-w="71.6"></div></div>
       <div class="health-note">&gt; 50%</div>
     </div>
     <div class="health-item">
       <div class="health-header">
         <span class="health-name">流動性</span>
-        <span class="health-val" style="color:#7EB8A4">19.5% ✅</span>
+        <span class="health-val" style="color:#7EB8A4">19.3% ✅</span>
       </div>
-      <div class="health-track"><div class="health-fill" style="background:#7EB8A4" data-w="19.5"></div></div>
+      <div class="health-track"><div class="health-fill" style="background:#7EB8A4" data-w="19.3"></div></div>
       <div class="health-note">&gt; 10%</div>
     </div>
   </div>
 
-  <!-- Net Worth Donut -->
+  <!-- Net Worth -->
   <div class="card">
     <div class="section-label" style="color:#A89BC2">淨值比例</div>
     <div class="donut-wrap">
@@ -279,7 +208,7 @@
         <svg id="netSvg" width="140" height="140" style="transform:rotate(-90deg)"></svg>
         <div class="donut-center">
           <div class="donut-center-label">負債比</div>
-          <div class="donut-center-value">28.6%</div>
+          <div class="donut-center-value">28.4%</div>
         </div>
       </div>
       <div class="legend">
@@ -287,8 +216,8 @@
           <div class="legend-dot" style="background:#7EB8A4"></div>
           <div class="legend-name">淨資產</div>
           <div class="legend-vals">
-            <div class="legend-amount">NT$23,266,682</div>
-            <div class="legend-pct">71.4%</div>
+            <div class="legend-amount">NT$23,277,849</div>
+            <div class="legend-pct">71.6%</div>
           </div>
         </div>
         <div class="legend-row">
@@ -296,7 +225,7 @@
           <div class="legend-name">永和房貸</div>
           <div class="legend-vals">
             <div class="legend-amount">NT$8,701,684</div>
-            <div class="legend-pct">26.7%</div>
+            <div class="legend-pct">26.8%</div>
           </div>
         </div>
         <div class="legend-row">
@@ -311,8 +240,8 @@
           <div class="legend-dot" style="background:#EDD480"></div>
           <div class="legend-name">信用卡未繳</div>
           <div class="legend-vals">
-            <div class="legend-amount">NT$88,244</div>
-            <div class="legend-pct">0.3%</div>
+            <div class="legend-amount">NT$0</div>
+            <div class="legend-pct">0.0%</div>
           </div>
         </div>
       </div>
@@ -320,24 +249,20 @@
   </div>
 </div>
 
-<div class="footer">資料來源：個人財務管理_主檔 · 2026-04</div>
+<div class="footer">資料來源：個人財務管理_主檔 · 2026-05-06</div>
 
 <script>
-  // ── Donut chart renderer ──
   function drawDonut(svgId, segments, size, stroke) {
     const svg = document.getElementById(svgId);
     const r = (size - stroke) / 2;
     const circ = 2 * Math.PI * r;
     const cx = size / 2, cy = size / 2;
     const total = segments.reduce((s, d) => s + d.v, 0);
-
-    // track
     const bg = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
     bg.setAttribute('cx', cx); bg.setAttribute('cy', cy); bg.setAttribute('r', r);
     bg.setAttribute('fill', 'none'); bg.setAttribute('stroke', '#1e1e2e');
     bg.setAttribute('stroke-width', stroke);
     svg.appendChild(bg);
-
     let offset = circ * 0.25;
     segments.forEach(seg => {
       const pct = seg.v / total;
@@ -351,7 +276,6 @@
       el.setAttribute('stroke-dashoffset', -offset + circ * 0.25);
       el.style.transition = 'stroke-dasharray 1.2s cubic-bezier(0.4,0,0.2,1)';
       svg.appendChild(el);
-      // animate
       setTimeout(() => el.setAttribute('stroke-dasharray', `${dash} ${gap}`), 100);
       offset -= dash;
     });
@@ -359,30 +283,28 @@
 
   drawDonut('assetSvg', [
     { v: 25000000, c: '#C8A96E' },
-    { v: 6356251,  c: '#7EB8A4' },
+    { v: 6279174,  c: '#7EB8A4' },
     { v: 1247641,  c: '#A89BC2' },
   ], 140, 22);
 
   drawDonut('liabSvg', [
     { v: 8701684, c: '#E07B6A' },
     { v: 547283,  c: '#E8A87C' },
-    { v: 88244,   c: '#EDD480' },
+    { v: 1,       c: '#EDD480' },
   ], 140, 22);
 
   drawDonut('netSvg', [
-    { v: 23266682, c: '#7EB8A4' },
+    { v: 23277849, c: '#7EB8A4' },
     { v: 8701684,  c: '#E07B6A' },
     { v: 547283,   c: '#E8A87C' },
-    { v: 88244,    c: '#EDD480' },
+    { v: 1,        c: '#EDD480' },
   ], 140, 22);
 
-  // ── Health bars ──
   document.querySelectorAll('.health-fill').forEach(el => {
     const w = el.dataset.w;
     setTimeout(() => { el.style.width = w + '%'; }, 300);
   });
 
-  // ── Service Worker ──
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js');
   }

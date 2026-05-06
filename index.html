@@ -122,19 +122,23 @@ function drawDonut(svgEl, segments, size, stroke) {
   bg.setAttribute('fill', 'none'); bg.setAttribute('stroke', '#1e1e2e');
   bg.setAttribute('stroke-width', stroke);
   svgEl.appendChild(bg);
-  let offset = circ * 0.25;
+  // Each segment: use strokeDasharray = [dash, gap] and strokeDashoffset to position
+  // Starting from top (12 o'clock) = offset of circ*0.25
+  let consumed = 0;
   segments.forEach(seg => {
     const dash = circ * (seg.v / total);
     const el = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
     el.setAttribute('cx', cx); el.setAttribute('cy', cy); el.setAttribute('r', r);
     el.setAttribute('fill', 'none'); el.setAttribute('stroke', seg.c);
     el.setAttribute('stroke-width', stroke);
+    // dashoffset positions the start: circ*0.25 = top, minus how much we've consumed
+    const dashOffset = circ * 0.25 - consumed;
     el.setAttribute('stroke-dasharray', `0 ${circ}`);
-    el.setAttribute('stroke-dashoffset', -offset + circ * 0.25);
+    el.setAttribute('stroke-dashoffset', dashOffset);
     el.style.transition = 'stroke-dasharray 1.2s cubic-bezier(0.4,0,0.2,1)';
     svgEl.appendChild(el);
     setTimeout(() => el.setAttribute('stroke-dasharray', `${dash} ${circ - dash}`), 80);
-    offset -= dash;
+    consumed += dash;
   });
 }
 

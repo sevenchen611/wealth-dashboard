@@ -51,7 +51,9 @@
     .health-track { height:5px; background:#1e1e2e; border-radius:3px; overflow:hidden; }
     .health-fill { height:100%; border-radius:3px; transition:width 1.2s cubic-bezier(0.4,0,0.2,1); width:0; }
     .health-note { font-family:monospace; font-size:10px; color:#444; margin-top:2px; }
-    .footer { margin-top:24px; text-align:center; font-family:monospace; font-size:10px; color:#2a2a3e; }
+    .footer { margin-top:16px; text-align:center; font-family:monospace; font-size:10px; color:#2a2a3e; }
+    .sheets-btn { display:flex; align-items:center; justify-content:center; gap:8px; margin:16px auto 0; padding:12px 20px; background:#13131f; border:1px solid #2a2a3e; border-radius:12px; color:#7EB8A4; font-family:monospace; font-size:12px; text-decoration:none; max-width:260px; }
+    .sheets-btn:active { background:#1e1e2e; border-color:#7EB8A4; }
     .loading { text-align:center; font-family:monospace; font-size:13px; color:#555; padding:60px 0; }
     .refresh-btn { position:fixed; bottom:24px; right:20px; background:#C8A96E; color:#0d0d1a; border:none; border-radius:50%; width:44px; height:44px; font-size:20px; cursor:pointer; box-shadow:0 4px 12px rgba(200,169,110,0.4); z-index:99; }
   </style>
@@ -306,6 +308,14 @@ async function loadData() {
           </div>
         </div>
       </div>
+      <a class="sheets-btn" href="https://docs.google.com/spreadsheets/d/1FKniea6CPBA6I91A2dS7gxi-pvsuEpbuHR4gFa3QnJo/edit" target="_blank">
+        <svg class="sheets-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="3" y="2" width="13" height="17" rx="2" fill="#0F9D58" opacity="0.15"/>
+          <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke="#0F9D58" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M14 2v6h6M8 13h8M8 17h5" stroke="#0F9D58" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        開啟 Google Sheets 編輯
+      </a>
       <div class="footer">資料來源：個人財務管理_主檔 · 即時同步</div>
     `;
 
